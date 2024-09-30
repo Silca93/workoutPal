@@ -1,0 +1,22 @@
+{
+    "name": "workout-buddy",
+    "version": "1.0.0",
+    "description": "Full stack MERN application for workout tracking",
+    "main": "backend/server.js",
+    "scripts": {
+      "start": "node backend/server.js",
+      "build": "cd frontend && npm install && npm run build",
+      "dev:server": "nodemon backend/server.js",
+      "dev:client": "cd frontend && npm run dev",
+      "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\""
+    },
+    "keywords": ["mern", "react", "express", "mongodb", "workout"],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "concurrently": "^8.0.1"
+    },
+    "engines": {
+      "node": ">=18.0.0"
+    }
+  }

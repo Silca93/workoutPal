@@ -8,6 +8,17 @@ const workoutRoutes = require('./routes/workouts')
 
 const userRoutes = require("./../backend/routes/user")
 
+//!for deployment
+if (process.env.NODE_ENV === 'production') {
+    const path = require('path');
+    app.use(express.static(path.join(__dirname, '../frontend/dist')));
+    
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
+    });
+  }
+//!
+
 //express app
 const app = express()
 
@@ -15,9 +26,16 @@ const app = express()
 app.use(cors());
 
 // If you want to allow only specific origins:
-app.use(cors({
-  origin: 'http://localhost:5173' // Your frontend URL
-}));
+// app.use(cors({
+//   origin: 'http://localhost:5173'
+//    // Your frontend URL
+// }));
+
+if (process.env.NODE_ENV !== 'production') {
+    app.use(cors({
+      origin: 'http://localhost:5173' // Your frontend URL in development
+    }));
+  }
 
 //middleware
 
