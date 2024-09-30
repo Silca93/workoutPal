@@ -30,26 +30,29 @@ export default function Navbar() {
                     <h1 className='font-bold text-3xl text-white'>Workout Pal</h1>
                 </Link>
             </div>
-            <div className='navContainer w-[15rem] h-full bg-white flex justify-center items-center'>
+            <div className='navContainer w-[18rem] h-full bg-white flex justify-center items-center'>
               <nav className='flex gap-4'>
                 {user ?  
-                  <div className="flex gap-4 justify-center items-center">
-                    <span className='text-green-700 font-semibold'>{user.email}</span>
-                    <div className="flex gap-1 justify-center items-center">
-                      <button onClick={handleLogout}>Logout</button>
+                  <div className="flex gap-2 justify-center items-center">
+                    <span className='text-green-700 font-semibold'>{user.email.length > 20 ? user.email.slice(0, 20) + '...' : user.email}
+                    </span>
+                    <span className="font-extralight">|</span>
+                    <div className="flex gap-1 justify-center items-center ring-1 ring-red-500 p-1 rounded-lg">
+                      <button className="text-sm font-semibold" onClick={handleLogout}>Logout</button>
                       <IoMdLogOut  className='text-red-600'/>
                     </div>
                   </div>
                   : 
-                  <div className='flex gap-4'>
+                  <div className='flex gap-4 justify-center items-center'>
                         <Link to="/login">
-                          <div className="flex gap-1 justify-center items-center">
+                          <div className="flex gap-1 justify-center items-center ring-1 ring-green-500 p-1 rounded-lg">
                                 <IoMdLogIn className='text-green-600'/>
-                                <button onClick={handleLogout}>Login</button>
+                                <button className="font-semibold" onClick={handleLogout}>Login</button>
                           </div>
                         </Link>
+                        <span className="font-extralight">|</span>
 
-                    <Link to="/signup">Signup</Link>
+                    <Link to="/signup" className="font-semibold">Signup</Link>
                   </div>
                 }
               </nav>

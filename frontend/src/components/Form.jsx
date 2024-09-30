@@ -1,9 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 export default function () {
     const {id} = useParams();
+    const {user} = useAuthContext()
 
     const [title, setTitle] = useState('');
     const [load, setLoad] = useState('');
@@ -17,6 +19,12 @@ export default function () {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        if (!user) {
+            setError('You must be logged in')
+
+            return 
+        }
+
         if (!title || !load || !reps) {
             setFieldError(!fieldError)
         }
@@ -27,7 +35,8 @@ export default function () {
             method: 'POST',
             body: JSON.stringify(workout),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()

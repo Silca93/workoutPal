@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import  {BrowserRouter, Routes, Route} from 'react-router-dom'
+import  {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import Home from './Home'
 import PropTypes from 'prop-types';
 import Login from './Login';
@@ -7,9 +7,10 @@ import Signup from './Signup';
 import Navbar from './components/Navbar'
 import './App.css'
 import { AuthContextProvider } from './context/authContext'
+import { useAuthContext } from './hooks/useAuthContext';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const {user} = useAuthContext()
 
   return (
     <div className='pages w-screen h-screen'>
@@ -19,15 +20,15 @@ function App() {
           <Routes>
             <Route
               path="/" 
-              element={<Home/>}>
+              element={user ? <Home/> : <Navigate to='/login'/>}>
             </Route>
             <Route
               path="/login" 
-              element={<Login/>}>
+              element={!user? <Login/> : <Navigate to ="/"/>}>
             </Route>
             <Route
               path="/signup" 
-              element={<Signup/>}>
+              element={!user? <Signup/> : <Navigate to ='/'/>}>
             </Route>
           </Routes>
         </div>
